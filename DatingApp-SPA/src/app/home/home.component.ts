@@ -2,11 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 @Component({
-  selector: "app-value",
-  templateUrl: "./value.component.html",
-  styleUrls: ["./value.component.scss"],
+  selector: "app-home",
+  templateUrl: "home.component.html",
 })
-export class ValueComponent implements OnInit {
+export class HomeComponent implements OnInit {
+  registerMode = false;
   values: any;
   constructor(private http: HttpClient) {}
 
@@ -23,5 +23,12 @@ export class ValueComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+  cancelRegisterMode(registerMode: boolean) {
+    this.registerMode = registerMode;
+  }
+
+  registerToggle() {
+    this.registerMode = true;
   }
 }

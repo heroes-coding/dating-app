@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DatingApp.API.Dtos;
 using DatingApp.API.Models;
 using DatingApp.API.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -25,6 +26,7 @@ namespace DatingApp.API.Controllers
       this._config = config;
     }
 
+    [AllowAnonymous]
     [HttpPost("register")]
     public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
     {
@@ -34,7 +36,6 @@ namespace DatingApp.API.Controllers
         return BadRequest("Username already exists");
 
       User userToCreate = new User { Username = userForRegisterDto.Username };
-
       User createdUser = await _authRepo.Register(userToCreate, userForRegisterDto.Password);
 
       // Need to fix later
