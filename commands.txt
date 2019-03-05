@@ -2,3 +2,9 @@ ng serve --port 4220
 
 create route guard named auth:
 ng g guard auth
+
+dotnet ef migrations list
+dotnet ef migrations --help
+dotnet ef migrations remove // removes latest migration
+
+dotnet ef database drop // DROPS EVERYTHING
