@@ -58,8 +58,17 @@ export class PhotoEditorComponent implements OnInit {
         const { id, url, dateAdded, description, isMain } = res;
         const photo = { id, url, dateAdded, description, isMain };
         this.photos.push(photo);
+        if (photo.isMain) {
+          this.changeMainPhotoInApp(photo);
+        }
       }
     };
+  }
+
+  changeMainPhotoInApp(photo: Photo) {
+    this.authService.changeMemberPhoto(photo.url);
+    this.authService.currentUser.photoUrl = photo.url;
+    localStorage.setItem("user", JSON.stringify(this.authService.currentUser));
   }
 
   setMainPhoto(photo: Photo) {
@@ -70,12 +79,7 @@ export class PhotoEditorComponent implements OnInit {
           this.currentMain = this.photos.filter(p => p.isMain)[0];
           this.currentMain.isMain = false;
           photo.isMain = true;
-          this.authService.changeMemberPhoto(photo.url);
-          this.authService.currentUser.photoUrl = photo.url;
-          localStorage.setItem(
-            "user",
-            JSON.stringify(this.authService.currentUser)
-          );
+          this.changeMainPhotoInApp(photo);
         },
         error => {
           this.alertify.error(error);
