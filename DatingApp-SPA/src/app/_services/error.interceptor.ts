@@ -5,7 +5,7 @@ import {
   HttpHandler,
   HttpEvent,
   HttpErrorResponse,
-  HTTP_INTERCEPTORS,
+  HTTP_INTERCEPTORS
 } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
@@ -28,8 +28,8 @@ export class ErrorInterceptor implements HttpInterceptor {
             return throwError(applicationError);
           }
           const serverError = error.error.errors;
+          const topError = error.error;
           let modelStateErrors = "";
-          console.log({ error });
           if (serverError && typeof serverError === "object") {
             for (const key in serverError) {
               if (serverError[key]) {
@@ -37,7 +37,9 @@ export class ErrorInterceptor implements HttpInterceptor {
               }
             }
           }
-          return throwError(modelStateErrors || serverError || "Server Error");
+          return throwError(
+            modelStateErrors || serverError || topError || "Server Error"
+          );
         }
       })
     );
@@ -47,5 +49,5 @@ export class ErrorInterceptor implements HttpInterceptor {
 export const ErrorInterceptorProvider = {
   provide: HTTP_INTERCEPTORS,
   useClass: ErrorInterceptor,
-  multi: true, // adds to already existing interceptors
+  multi: true // adds to already existing interceptors
 };

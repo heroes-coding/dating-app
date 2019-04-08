@@ -10,7 +10,12 @@ import { HomeComponent } from "./home/home.component";
 import { RegisterComponent } from "./register/register.component";
 import { ErrorInterceptorProvider } from "./_services/error.interceptor";
 import { AlertifyService } from "./_services/alertify.service";
-import { BsDropdownModule, TabsModule, PaginationModule } from "ngx-bootstrap";
+import {
+  BsDropdownModule,
+  TabsModule,
+  PaginationModule,
+  ButtonsModule
+} from "ngx-bootstrap";
 import { MemberListComponent } from "./members/member-list/member-list.component";
 import { ListsComponent } from "./lists/lists.component";
 import { MessagesComponent } from "./messages/messages.component";
@@ -31,6 +36,7 @@ import { PhotoEditorComponent } from "./members/photo-editor/photo-editor.compon
 import { FileUploadModule } from "ng2-file-upload";
 import { BsDatepickerModule } from "ngx-bootstrap";
 import { TimeAgoPipe } from "time-ago-pipe";
+import { ListsResolver } from "./_resolvers/lists.resolver";
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -49,12 +55,13 @@ export function tokenGetter() {
     MemberDetailComponent,
     MemberEditComponent,
     PhotoEditorComponent,
-    TimeAgoPipe,
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ButtonsModule,
     ReactiveFormsModule,
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(appRoutes),
@@ -67,9 +74,9 @@ export function tokenGetter() {
       config: {
         tokenGetter,
         whitelistedDomains: ["localhost:5000"],
-        blacklistedRoutes: ["localhost:5000/api/auth"],
-      },
-    }),
+        blacklistedRoutes: ["localhost:5000/api/auth"]
+      }
+    })
   ],
   providers: [
     AuthService,
@@ -81,7 +88,8 @@ export function tokenGetter() {
     MemberDetailResolver,
     MemberListResolver,
     MemberEditResolver,
+    ListsResolver
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
